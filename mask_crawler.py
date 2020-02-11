@@ -38,11 +38,12 @@ def get_data(text):
         for row in rows:
             location_store = row[2]
             if location == location_store[:3]:
-                res += "{}\n".format(location_store)
+                res += '{}\n'.format(location_store)
             #print(row[6]) #data update time
+    print(res[:200])
     print('Get data OK.')
     f.close()
-    return 'res'
+    return res[:200]
 
 def reply(text):
     link = get_dl_link()
