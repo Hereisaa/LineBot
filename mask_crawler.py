@@ -29,7 +29,7 @@ def get_file(link):
 
 def get_data(text):
     res = ""
-    location = text[4:]
+    location = text[3:]
     with open('maskdata.csv',newline='',encoding="utf-8") as f:
         rows = csv.reader(f)
         for row in rows:
