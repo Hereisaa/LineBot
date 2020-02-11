@@ -42,7 +42,7 @@ def get_data(text):
             #print(row[6]) #data update time
     print('Get data OK.')
     f.close()
-    return res
+    return 'res'
 
 def reply(text):
     link = get_dl_link()
