@@ -27,23 +27,26 @@ def get_file(link):
     f.close()
     return
 
-def get_data(file):
-    with open(file,newline='',encoding="utf-8") as f:
+def get_data(text):
+    res = ""
+    location = text[4:]
+    with open('maskdata.csv',newline='',encoding="utf-8") as f:
         rows = csv.reader(f)
         for row in rows:
-            loc = row[2]
+            location_store = row[2]
+            if location == location_store[:3]:
+                res += "{}\n".format(location_store)
 
-            print(row)
+            #print(row)
             #print(row[2]) #location
             #print(row[6]) #data update time
     f.close()
-    return 'GET!'
+    return res
 
 def reply(text):
-    file_name = 'maskdata.csv'
     link = get_dl_link()
     get_file(link)
-    return get_data(file_name)
+    return get_data(text)
 
 '''
 file_name = 'maskdata.csv'
