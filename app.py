@@ -39,10 +39,10 @@ def handle_message(event):
     #content = "{}: {}".format(event.source.user_id, event.message.text)
     content = "{}".format(event.message.text)
 
-    if content[4:] == "口罩":
+    if content[3:] == "口罩":
         line_bot_api.reply_message(event.reply_token,
             TextSendMessage(text=mask_crawler.reply(content)))
-    elif content[4:] != "口罩":
+    elif content[3:] != "口罩":
         line_bot_api.reply_message(event.reply_token,
             TextSendMessage(text='輸入格式錯誤'))
     else:
