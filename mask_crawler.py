@@ -20,9 +20,13 @@ def get_dl_link():
 def get_file(link):
     url = link
     path = 'maskdata.csv'
+    
     print('downloading...')
+
     r = requests.get(url)
+
     print('download OK.')
+
     with open(path,'wb') as f:
         f.write(r.content)
     f.close()
@@ -31,8 +35,10 @@ def get_file(link):
 def get_data(text):
     res = ""
     location = text[:3]
+
     print(location)
     print('Getting data...')
+
     with open('maskdata.csv',newline='',encoding="utf-8") as f:
         rows = csv.reader(f)
         for row in rows:
@@ -40,8 +46,10 @@ def get_data(text):
             if location == location_store[:3]:
                 res += '{}\n'.format(location_store)
             #print(row[6]) #data update time
+
     print(res[:200])
     print('Get data OK.')
+
     f.close()
     return res[:200]
 
@@ -49,14 +57,6 @@ def reply(text):
     link = get_dl_link()
     get_file(link)
     return get_data(text)
-
-'''
-file_name = 'maskdata.csv'
-if __name__ ==  "__main__":
-    link = get_dl_link()
-    get_file(link)
-    get_data(file_name)
-'''
 
 '''
 if __name__ ==  "__main__":
