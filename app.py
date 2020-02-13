@@ -38,6 +38,10 @@ def callback():
 def handle_message(event):
     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
     #content = "{}: {}".format(event.source.user_id, event.message.text)
+
+    line_bot_api.reply_message(event.reply_token,
+                TextSendMessage(text='456'))
+
     content = "{}".format(event.message.text)
 
     if content[3:] == "口罩":
