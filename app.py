@@ -58,9 +58,9 @@ def handle_location_message(event):
         event.reply_token,
         LocationSendMessage(
             title='Location', 
-            address='tokyo',
-            latitude=35.65910807942215, 
-            longitude=139.70372892916203
+            address=event.message.address,
+            latitude=event.message.latitude, 
+            longitude=event.message.longitude
         )
     )
 
