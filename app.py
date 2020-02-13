@@ -8,7 +8,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, LocationMessage, LocationSendMessage
+    MessageEvent, TextMessage, TextSendMessage, LocationMessage, LocationSendMessage,
 )
 
 app = Flask(__name__)
@@ -33,15 +33,11 @@ def callback():
 
     return 'OK'
 
-# 文字訊息
+# 接收 文字 訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
     #content = "{}: {}".format(event.source.user_id, event.message.text)
-
-    line_bot_api.reply_message(event.reply_token,
-                TextSendMessage(text='456'))
-
     content = "{}".format(event.message.text)
 
     if content[3:] == "口罩":
@@ -55,20 +51,18 @@ def handle_message(event):
             TextSendMessage(text=content))
 
 
-# 位置訊息
+# 接收 位置 訊息
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
-    # line_bot_api.reply_message(
-    #     event.reply_token,
-    #     LocationSendMessage(
-    #         title='Location', address=event.message.address,
-    #         latitude=event.message.latitude, longitude=event.message.longitude
-    #     )
-    # )
- 
-        line_bot_api.reply_message(event.reply_token,
-            TextSendMessage(text='123'))
-
+    line_bot_api.reply_message(
+        event.reply_token,
+        LocationSendMessage(
+            title='Location', 
+            address='tokyo',
+            latitude=35.65910807942215, 
+            longitude=139.70372892916203
+        )
+    )
 
 
 import os
