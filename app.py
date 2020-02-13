@@ -61,15 +61,9 @@ def handle_location_message(event):
     #         latitude=event.message.latitude, longitude=event.message.longitude
     #     )
     # )
-    if content[3:] == "口罩":
+ 
         line_bot_api.reply_message(event.reply_token,
-            TextSendMessage(text=mask_crawler.reply(content)))
-    elif content[3:] != "口罩":
-        line_bot_api.reply_message(event.reply_token,
-            TextSendMessage(text='輸入格式錯誤'))
-    else:
-        line_bot_api.reply_message(event.reply_token,
-            TextSendMessage(text=content))
+            TextSendMessage(text='123'))
 
 
 
