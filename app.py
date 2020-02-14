@@ -61,26 +61,26 @@ def handle_location_message(event):
     for addr, info in reply_content.items():
         line_bot_api.reply_message(
             event.reply_token,
-            LocationSendMessage(
-                title=info[0], 
-                # 地址 電話 成人數量 兒童數量 距離
-                address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
-                        .format(addr, info[1], info[2], info[3], info[4]),
-                latitude=info[5], 
-                longitude=info[6]
-            )
+            [
+                LocationSendMessage(
+                    title=info[0], 
+                    # 地址 電話 成人數量 兒童數量 距離
+                    address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
+                            .format(addr, info[1], info[2], info[3], info[4]),
+                    latitude=info[5], 
+                    longitude=info[6]
+                ),
+                            LocationSendMessage(
+                    title=info[0], 
+                    # 地址 電話 成人數量 兒童數量 距離
+                    address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
+                            .format(addr, info[1], info[2], info[3], info[4]),
+                    latitude=info[5], 
+                    longitude=info[6]
+                )
+            ]
         )
-        line_bot_api.reply_message(
-            event.reply_token,
-            LocationSendMessage(
-                title=info[0], 
-                # 地址 電話 成人數量 兒童數量 距離
-                address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
-                        .format(addr, info[1], info[2], info[3], info[4]),
-                latitude=info[5], 
-                longitude=info[6]
-            )
-        )
+
 
 
 # @handler.add(MessageEvent, message=LocationMessage)
