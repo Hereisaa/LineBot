@@ -68,6 +68,7 @@ def handle_message(event):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
     image_url = 'https://cdn.hk01.com/di/media/images/564720/org/7a5b31ccd89a2360794c1ef6bf54393f.jpg/0ws2YFTJcguqJ5hF1Hp3V8ELwZfAP_rMiLU2UYi1NlE?v=w1920'
+    reply_content = mask_crawler.reply(event.message.address,'text')
     line_bot_api.reply_message(
         event.reply_token,
         TemplateSendMessage(
@@ -85,32 +86,12 @@ def handle_location_message(event):
                                 data='action=buy&itemid=1'
                             ),
                             MessageAction(
-                                label='message1',
+                                label=reply_content.keys,
                                 text='message text1'
                             ),
                             URIAction(
                                 label='uri1',
                                 uri='http://example.com/1'
-                            )
-                        ]
-                    ),
-                    CarouselColumn(
-                        thumbnail_image_url=image_url,
-                        title='this is menu2',
-                        text='description2',
-                        actions=[
-                            PostbackAction(
-                                label='postback2',
-                                display_text='postback text2',
-                                data='action=buy&itemid=2'
-                            ),
-                            MessageAction(
-                                label='message2',
-                                text='message text2'
-                            ),
-                            URIAction(
-                                label='uri2',
-                                uri='http://example.com/2'
                             )
                         ]
                     )
