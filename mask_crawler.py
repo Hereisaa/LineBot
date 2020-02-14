@@ -64,7 +64,7 @@ def get_data(content, msg_type):
                     phar_addr.append(location_store)
                     res += '{}\n'.format(location_store)
                 #print(row[6]) #data update time
-            sorted_dist, duration = phar_mapping.calculating(ue_location, phar_addr)
+            sorted_dist, duration, total_info = phar_mapping.calculating(ue_location, phar_addr, total_info)
         f.close()
         # print(sorted_dist[:5])
 
@@ -75,7 +75,7 @@ def get_data(content, msg_type):
             info = total_info.get(sorted_dist[i][0])
             info.append(sorted_dist[i][1])
             res.update({sorted_dist[i][0] : info})
-
+        # {location: name, tel, adult, kid, lat, lon, distance}   
 
         # # 藥局名稱
         # for i in range(5):

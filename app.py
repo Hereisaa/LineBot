@@ -52,53 +52,57 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token,
             TextSendMessage(text=content))
 
-# @handler.add(MessageEvent, message=LocationMessage)
-# def handle_location_message(event):
-#     line_bot_api.reply_message(
-#         event.reply_token,
-#         LocationSendMessage(
-#             title='Location', 
-#             address=event.message.address,
-#             latitude=event.message.latitude, 
-#             longitude=event.message.longitude
-#         )
-#     )
-
-
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
-    image_url = 'https://cdn.hk01.com/di/media/images/564720/org/7a5b31ccd89a2360794c1ef6bf54393f.jpg/0ws2YFTJcguqJ5hF1Hp3V8ELwZfAP_rMiLU2UYi1NlE?v=w1920'
     reply_content = mask_crawler.reply(event.message.address,'text')
+    info = reply_content.values()
     line_bot_api.reply_message(
         event.reply_token,
-        TemplateSendMessage(
-            alt_text='Carousel template',
-            template=CarouselTemplate(
-                columns=[
-                    CarouselColumn(
-                        thumbnail_image_url=image_url,
-                        title='this is menu1',
-                        text='description1',
-                        actions=[
-                            PostbackAction(
-                                label='postback1',
-                                display_text='postback text1',
-                                data='action=buy&itemid=1'
-                            ),
-                            MessageAction(
-                                label=reply_content.keys(),
-                                text='message text1'
-                            ),
-                            URIAction(
-                                label='uri1',
-                                uri='http://example.com/1'
-                            )
-                        ]
-                    )
-                ]
-            )
+        LocationSendMessage(
+            title=info[0], 
+            # 地址 電話 成人數量 兒童數量 距離
+            address="{}\n{}\n成人剩餘 :{}個\n兒童剩餘 :{}個\n與您距離 {} km"
+                    .format(reply_content.keys(), info[1], info[2], info[3], info[6]),
+            latitude=info[4], 
+            longitude=info[5]
         )
     )
+
+
+# @handler.add(MessageEvent, message=LocationMessage)
+# def handle_location_message(event):
+#     image_url = 'https://cdn.hk01.com/di/media/images/564720/org/7a5b31ccd89a2360794c1ef6bf54393f.jpg/0ws2YFTJcguqJ5hF1Hp3V8ELwZfAP_rMiLU2UYi1NlE?v=w1920'
+#     reply_content = mask_crawler.reply(event.message.address,'text')
+#     line_bot_api.reply_message(
+#         event.reply_token,
+#         TemplateSendMessage(
+#             alt_text='Carousel template',
+#             template=CarouselTemplate(
+#                 columns=[
+#                     CarouselColumn(
+#                         thumbnail_image_url=image_url,
+#                         title='this is menu1',
+#                         text='description1',
+#                         actions=[
+#                             PostbackAction(
+#                                 label='postback1',
+#                                 display_text='postback text1',
+#                                 data='action=buy&itemid=1'
+#                             ),
+#                             MessageAction(
+#                                 label='message1',
+#                                 text='message text1'
+#                             ),
+#                             URIAction(
+#                                 label='uri1',
+#                                 uri='http://example.com/1'
+#                             )
+#                         ]
+#                     )
+#                 ]
+#             )
+#         )
+#     )
 
 
 
