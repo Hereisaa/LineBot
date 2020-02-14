@@ -59,12 +59,10 @@ def handle_location_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         LocationSendMessage(
-            title=info[0], 
-            # 地址 電話 成人數量 兒童數量 距離
-            address="{}\n{}\n成人剩餘 :{}個\n兒童剩餘 :{}個\n與您距離 {} km"
-                    .format(reply_content.keys(), info[1], info[2], info[3], info[6]),
-            latitude=info[4], 
-            longitude=info[5]
+            title='my location',
+            address='Tokyo',
+            latitude=35.65910807942215,
+            longitude=139.70372892916203
         )
     )
 
