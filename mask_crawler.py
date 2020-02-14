@@ -52,7 +52,11 @@ def get_data(content, msg_type):
 
         with open('maskdata.csv',newline='',encoding="utf-8") as f:
             rows = csv.reader(f)
+            count = 0
             for row in rows:
+                if count == 0 : 
+                    count+=1 
+                    continue
                 name_store      = row[1]
                 location_store  = row[2]
                 # {location: name, tel, adult, kid}     
@@ -63,8 +67,12 @@ def get_data(content, msg_type):
                     phar_addr.append(location_store)
                     res += '{}\n'.format(location_store)
                 #print(row[6]) #data update time
-            sorted_dist, duration, total_info = phar_mapping.calculating(ue_location, phar_addr, total_info)
+
+            print('Calculating ...')
+            sorted_dist, duration, geomatry = phar_mapping.calculating(ue_location, phar_addr, total_info)
+            print('Done ...')
         f.close()
+        print('File closed ...')
         # print(sorted_dist[:5])
 
 
@@ -73,6 +81,8 @@ def get_data(content, msg_type):
         for i in range(5):
             info = total_info.get(sorted_dist[i][0])
             info.append(sorted_dist[i][1])
+            info.append(geomatry[i][0])
+            info.append(geomatry[i][1])
             res.update({sorted_dist[i][0] : info})
         # {location: name, tel, adult, kid, lat, lon, distance}   
 
@@ -88,4 +98,4 @@ def reply(content, msg_type):
 
 
 # if __name__ ==  "__main__":
-#     reply('臺東縣口罩', 'text')
+#     reply('台東縣台東市更生路62-78', 'text')

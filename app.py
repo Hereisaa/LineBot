@@ -54,7 +54,8 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
-    reply_content = mask_crawler.reply(event.message.address[5:],'text')
+    # reply_content = mask_crawler.reply(event.message.address[5:],'text')
+    reply_content = mask_crawler.reply('台東縣台東市更生路62-78','text')
     info = reply_content.values()
     line_bot_api.reply_message(
         event.reply_token,
@@ -62,9 +63,9 @@ def handle_location_message(event):
             title=info[0], 
             # 地址 電話 成人數量 兒童數量 距離
             address="{}\n{}\n成人剩餘 :{}個\n兒童剩餘 :{}個\n與您距離 {} km"
-                    .format(reply_content.keys(), info[1], info[2], info[3], info[6]),
-            latitude=info[4], 
-            longitude=info[5]
+                    .format(reply_content.keys(), info[1], info[2], info[3], info[4]),
+            latitude=info[5], 
+            longitude=info[6]
         )
     )
 
