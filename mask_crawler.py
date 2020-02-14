@@ -1,6 +1,7 @@
 import requests
 import os
 import csv
+import phar_mapping
 from bs4 import BeautifulSoup
 
 def get_dl_link():
@@ -32,33 +33,49 @@ def get_file(link):
     f.close()
     return
 
-def get_data(text):
+def get_data(content, msg_type):
     res = ""
-    location = text[:3]
+    # location = content[:3]
+    # print(location)
 
-    print(location)
     print('Getting data...')
 
-    with open('maskdata.csv',newline='',encoding="utf-8") as f:
-        rows = csv.reader(f)
-        for row in rows:
-            location_store = row[2]
-            if location == location_store[:3]:
-                res += '{}\n'.format(location_store)
-            #print(row[6]) #data update time
+    # content is text
+    if msg_type == 'text':
+        phar_info = {}
+        phar_addr = []
+        sorted_dist = []
+        duration ={}
+        ue_location = content[:3]
 
-    print(res[:200])
-    print('Get data OK.')
+        with open('maskdata.csv',newline='',encoding="utf-8") as f:
+            rows = csv.reader(f)
+            for row in rows:
+                name_store = row[1]
+                location_store = row[2]
 
-    f.close()
-    return res[:200]
+                if ue_location == location_store[:3]:
+                    phar_info.update({name_store: location_store})
+                    phar_addr.append(location_store)
+                    res += '{}\n'.format(location_store)
+                #print(row[6]) #data update time
+            sorted_dist, duration = phar_mapping.calculating(ue_location, phar_addr)
 
-def reply(text):
+        f.close()
+
+        candi = get_key(phar_info, sorted_dist[:5])
+        new_phar_info = dict(zip(candi, sorted_dist))
+
+        return new_phar_info
+
+def get_key(dict, value):
+    return [k for k, v in dict.items() if v == value]
+
+def reply(content, msg_type):
     link = get_dl_link()
     get_file(link)
-    return get_data(text)
+    return get_data(content, msg_type)
 
-'''
-if __name__ ==  "__main__":
-    reply('臺中市口罩')
-'''
+
+# if __name__ ==  "__main__":
+#     reply('臺中市口罩')
