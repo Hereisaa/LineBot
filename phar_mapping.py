@@ -20,17 +20,6 @@ def calculating(ue_location, phar_addr, total_info):
     dist = {}
     duration = {}
 
-    # print('Total_info')
-    # for addr, info in total_info.items():
-    #     geocode_result = gmaps.geocode(addr)
-    #     # print(geocode_result)
-    #     lat = geocode_result[0]["geometry"]["location"]["lat"]
-    #     lon = geocode_result[0]["geometry"]["location"]["lng"]
-    #     info.append(str(lat))
-    #     info.append(str(lon))
-    #     total_info[addr] = info
-    # print('Total_info Done')
-
     for addr in phar_addr:
         rad = gmaps.distance_matrix(ue_location,addr)['rows'][0]['elements'][0]
 
@@ -40,22 +29,24 @@ def calculating(ue_location, phar_addr, total_info):
         # print(addr)
         # print(rad)
         # print(json.dumps(rad, sort_keys=False, indent=4, separators=(', ', ': ')))
+
         stri = rad['distance']['text']
         d = float(''.join([x for x in stri if ( x.isdigit() or x == '.' )]))
 
         dist.update({addr:d})
         duration.update({addr:rad['duration']['text']})
 
-    print('Total_info')
+
     geomatry = []
     for addr in dist.keys():
         geocode_result = gmaps.geocode(addr)
         # print(geocode_result)
         lat = geocode_result[0]["geometry"]["location"]["lat"]
         lon = geocode_result[0]["geometry"]["location"]["lng"]
+
         geomatry.append([str(lat),str(lon)])
     # print(geomatry)
-    print('Total_info Done')
+
 
     sorted_dist = sorted(dist.items(),key=lambda item:item[1])
     # print(sorted_dist)
