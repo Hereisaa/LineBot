@@ -58,7 +58,7 @@ def handle_location_message(event):
     reply_content = mask_crawler.reply('台東縣台東市更生路62-78','text')
     # info = reply_content.values()
 
-    for addr, info in reply_content:
+    for addr, info in reply_content.items():
         line_bot_api.reply_message(
             event.reply_token,
             LocationSendMessage(
