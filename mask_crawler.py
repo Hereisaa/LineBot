@@ -46,9 +46,8 @@ def get_data(content, msg_type):
         phar_addr = []
         sorted_dist = []
         duration ={}
-        candi = []
-        ue_location = '臺東縣台東市更生路11號'
 
+        ue_location = content
         total_info = {}
 
         with open('maskdata.csv',newline='',encoding="utf-8") as f:
@@ -77,18 +76,6 @@ def get_data(content, msg_type):
             res.update({sorted_dist[i][0] : info})
         # {location: name, tel, adult, kid, lat, lon, distance}   
 
-        # # 藥局名稱
-        # for i in range(5):
-        #     candi.append( list(phar_info.keys())[list(phar_info.values())
-        #          .index(sorted_dist[i][0])] )
-
-        # # 藥局地址
-        # sorted_addr = []
-        # for i in range(5):
-        #     sorted_addr.append(sorted_dist[i][0])
-
-        # # 名稱:地址
-        # new_phar_info = dict(zip(candi, sorted_addr))
 
         print(res)
         return res
@@ -100,5 +87,5 @@ def reply(content, msg_type):
     return get_data(content, msg_type)
 
 
-if __name__ ==  "__main__":
-    reply('臺東縣口罩', 'text')
+# if __name__ ==  "__main__":
+#     reply('臺東縣口罩', 'text')
