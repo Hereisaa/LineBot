@@ -86,7 +86,7 @@ def handle_location_message(event):
                                 data='action=buy&itemid=1'
                             ),
                             MessageAction(
-                                label=reply_content.keys,
+                                label=reply_content.keys(),
                                 text='message text1'
                             ),
                             URIAction(
