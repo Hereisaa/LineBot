@@ -11,9 +11,9 @@ gmaps = googlemaps.Client(key = apiKey)
 # ue_location
 # phar_info
 MAX_NUM = 5 # 回傳給使用者的數量
-ue_location = '台中市北屯區九龍街31號'
-phar_addr =['新北市石碇區潭邊里碇坪路１段８２號','新北市平溪區公園街１７號１樓',
-'新北市貢寮區朝陽街７０巷１０號','新北市烏來區新烏路５段１０９號']
+# ue_location = '台中市北屯區九龍街31號'
+# phar_addr =['新北市石碇區潭邊里碇坪路１段８２號','新北市平溪區公園街１７號１樓',
+# '新北市貢寮區朝陽街７０巷１０號','新北市烏來區新烏路５段１０９號']
 
 # 計算使用者到各藥局的 距離(dist) 與 時間(duration)
 def calculating(ue_location,phar_addr):
@@ -21,15 +21,17 @@ def calculating(ue_location,phar_addr):
     duration = {}
     for addr in phar_addr:
         rad = gmaps.distance_matrix(ue_location,addr)['rows'][0]['elements'][0]
-        print(json.dumps(rad, sort_keys=False, indent=4, separators=(', ', ': ')))
-
+        # print(addr)
+        # print(json.dumps(rad, sort_keys=False, indent=4, separators=(', ', ': ')))
         str = rad['distance']['text']
-        d = int(''.join([x for x in str if x.isdigit()]))
+        d = float(''.join([x for x in str if ( x.isdigit() or x == '.' )]))
 
         dist.update({addr:d})
         duration.update({addr:rad['duration']['text']})
 
     sorted_dist = sorted(dist.items(),key=lambda item:item[1])
+    print(sorted_dist)
+    print('\n')
     
     return  sorted_dist, duration
 

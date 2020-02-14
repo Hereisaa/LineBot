@@ -46,30 +46,53 @@ def get_data(content, msg_type):
         phar_addr = []
         sorted_dist = []
         duration ={}
-        ue_location = content[:3]
+        candi = []
+        ue_location = '臺東縣台東市更生路11號'
+
+        total_info = {}
 
         with open('maskdata.csv',newline='',encoding="utf-8") as f:
             rows = csv.reader(f)
             for row in rows:
-                name_store = row[1]
-                location_store = row[2]
+                name_store      = row[1]
+                location_store  = row[2]
+                # {location: name, tel, adult, kid}     
+                total_info.update({row[2]:[row[1], row[3], row[4], row[5]]})      
 
-                if ue_location == location_store[:3]:
+                if ue_location[:3] == location_store[:3]:
                     phar_info.update({name_store: location_store})
                     phar_addr.append(location_store)
                     res += '{}\n'.format(location_store)
                 #print(row[6]) #data update time
             sorted_dist, duration = phar_mapping.calculating(ue_location, phar_addr)
-
         f.close()
+        # print(sorted_dist[:5])
 
-        candi = get_key(phar_info, sorted_dist[:5])
-        new_phar_info = dict(zip(candi, sorted_dist))
 
-        return new_phar_info
 
-def get_key(dict, value):
-    return [k for k, v in dict.items() if v == value]
+        res ={}
+        for i in range(5):
+            info = total_info.get(sorted_dist[i][0])
+            info.append(sorted_dist[i][1])
+            res.update({sorted_dist[i][0] : info})
+
+
+        # # 藥局名稱
+        # for i in range(5):
+        #     candi.append( list(phar_info.keys())[list(phar_info.values())
+        #          .index(sorted_dist[i][0])] )
+
+        # # 藥局地址
+        # sorted_addr = []
+        # for i in range(5):
+        #     sorted_addr.append(sorted_dist[i][0])
+
+        # # 名稱:地址
+        # new_phar_info = dict(zip(candi, sorted_addr))
+
+        print(res)
+        return res
+
 
 def reply(content, msg_type):
     link = get_dl_link()
@@ -77,5 +100,5 @@ def reply(content, msg_type):
     return get_data(content, msg_type)
 
 
-# if __name__ ==  "__main__":
-#     reply('臺中市口罩')
+if __name__ ==  "__main__":
+    reply('臺東縣口罩', 'text')
