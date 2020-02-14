@@ -54,7 +54,7 @@ def handle_message(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
-    reply_content = mask_crawler.reply(event.message.address[3:],'text')
+    reply_content = mask_crawler.reply(event.message.address[5:],'text')
     info = reply_content.values()
     line_bot_api.reply_message(
         event.reply_token,
