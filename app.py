@@ -58,18 +58,17 @@ def handle_location_message(event):
     reply_content = mask_crawler.reply('台東縣台東市更生路62-78','text')
     # info = reply_content.values()
 
-    count = 0
     send_message = []
     for addr, info in reply_content.items():
-        send_message[count] = LocationSendMessage(
+        send_message.append(LocationSendMessage(
             title=info[0], 
             # 地址 電話 成人數量 兒童數量 距離
             address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
                     .format(addr, info[1], info[2], info[3], info[4]),
             latitude=info[5], 
             longitude=info[6]
-        )
-        count+=1
+        ))
+        
 
     line_bot_api.reply_message(event.reply_token, send_message)
 
