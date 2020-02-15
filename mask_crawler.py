@@ -98,7 +98,7 @@ def reply(content, msg_type):
     return get_data(content, msg_type)
 
 
-# if __name__ ==  "__main__":
-#     msg = '406台灣台中市北屯區九龍街17號'
-#     print(msg[5:])
-#     reply(msg[5:], 'text')
+if __name__ ==  "__main__":
+    msg = '406台灣台中市北屯區九龍街32巷10號'
+    print(msg[5:])
+    reply(msg[5:], 'text')

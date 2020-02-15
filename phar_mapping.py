@@ -10,12 +10,6 @@ input:  {ue_location} user location  # 使用者定位
 apiKey = 'AIzaSyCnfl_3Kn51wVMmu8JfiKCs91YlI70HQig'
 gmaps = googlemaps.Client(key = apiKey)
 
-# ue_location
-# phar_info
-# MAX_NUM = 5 # 回傳給使用者的數量
-# ue_location = '台東縣台東市更生路11號'
-# phar_addr =['新北市石碇區潭邊里碇坪路１段８２號','新北市平溪區公園街１７號１樓',
-# '新北市貢寮區朝陽街７０巷１０號','新北市烏來區新烏路５段１０９號']
 
 # Threads todo
 def job_distance_matrix(ue_location, addr, dist):
@@ -27,17 +21,21 @@ def job_distance_matrix(ue_location, addr, dist):
     dist.update({addr:d})
     # duration.update({addr:rad['duration']['text']})
 
-def job_geocode(addr, geomatry):
+
+def job_geocode(addr, geomatry, count):
     geocode_result = gmaps.geocode(addr)
     # print(geocode_result)
     lat = geocode_result[0]["geometry"]["location"]["lat"]
     lon = geocode_result[0]["geometry"]["location"]["lng"]
-    geomatry.append([str(lat),str(lon)])
+    # geomatry.append([str(lat),str(lon)])
+    geomatry[count] = [str(lat),str(lon)]
+
 
 # 計算使用者到各藥局的 距離(dist) 與 時間(duration)
 def calculating(ue_location, phar_addr, total_info):
     dist = {}
-    geomatry = []
+    # geomatry = []
+    geomatry = [None]*5
     
     # # # #
     tStart = time.time()
@@ -55,17 +53,18 @@ def calculating(ue_location, phar_addr, total_info):
     print('Matrix Done.')
     tEnd = time.time()
     print('It cost %f sec' % (tEnd - tStart))
-    print(dist)
+    # print(dist)
 
-
+    sorted_dist = sorted(dist.items(),key=lambda item:item[1])
+    print(sorted_dist)
 
     # # # #
     tStart = time.time()
     print('Geomatry...')
     t_geocode = []
     count = 0
-    for addr in dist.keys():
-        t_geocode.append(threading.Thread(target = job_geocode, args = (addr, geomatry)))
+    for content in sorted_dist[:5]:
+        t_geocode.append(threading.Thread(target = job_geocode, args = (content[0], geomatry, count)))
         t_geocode[count].start()
         count += 1
 
@@ -75,13 +74,12 @@ def calculating(ue_location, phar_addr, total_info):
     print('Geomatry Done.')
     tEnd = time.time()
     print('It cost %f sec' % (tEnd - tStart))
-    print(geomatry)
+    # print(geomatry)
 
 
 
 
-    sorted_dist = sorted(dist.items(),key=lambda item:item[1])
-    print(sorted_dist)
+    
 
     return  sorted_dist, geomatry
 
