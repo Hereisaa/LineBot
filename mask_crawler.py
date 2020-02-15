@@ -95,7 +95,7 @@ def get_data(content, msg_type):
 def reply(content, msg_type):
     link = get_dl_link()
     get_file(link)
-    return get_data(addr, msg_type)
+    return get_data(content, msg_type)
 
 
 if __name__ ==  "__main__":
