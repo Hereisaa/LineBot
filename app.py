@@ -55,9 +55,8 @@ def callback():
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
     # reply_content = mask_crawler.reply(event.message.address[5:],'text')
-    reply_content = mask_crawler.reply('台東縣台東市更生路62-78','text')
+    reply_content = mask_crawler.reply(event.message.address[5:],'text')
     # info = reply_content.values()
-
     send_message = []
     for addr, info in reply_content.items():
         send_message.append(LocationSendMessage(
@@ -68,7 +67,6 @@ def handle_location_message(event):
             latitude=info[5], 
             longitude=info[6]
         ))
-        
 
     line_bot_api.reply_message(event.reply_token, send_message)
 
