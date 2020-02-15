@@ -77,20 +77,16 @@ def calculating(ue_location, phar_addr, total_info):
     # print(geomatry)
 
 
-
-
-    
-
     return  sorted_dist, geomatry
 
 
 
-
-
 # if __name__ == "__main__":
+
+#     geocode_result = gmaps.geocode('No.70號,Lianhai Road,Gushan District')
+#     print(geocode_result)
 #     dist, duration = calculating(ue_location, phar_addr, total_info)
-# #     print(dist)
-# #     print(duration)
+
 
 # # rad['distance']['text'] -> 距離(km)
 # # rad['duration']['text'] -> 時間(hours mins)
