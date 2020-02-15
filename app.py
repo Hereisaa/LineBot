@@ -41,8 +41,18 @@ def handle_message(event):
     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
     #content = "{}: {}".format(event.source.user_id, event.message.text)
     content = "{}".format(event.message.text)
-    line_bot_api.reply_message(event.reply_token,
-             TextSendMessage(text=mask_crawler.reply(content,'text')))
+    send_message = []
+    for addr, info in reply_content.items():
+        send_message.append(LocationSendMessage(
+            title=info[0], 
+            # 地址 電話 成人數量 兒童數量 距離
+            address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
+                    .format(addr, info[1], info[2], info[3], info[4]),
+            latitude=info[5], 
+            longitude=info[6]
+        ))
+
+    line_bot_api.reply_message(event.reply_token, send_message)
     # if content[3:] == "口罩":
     #     line_bot_api.reply_message(event.reply_token,
     #         TextSendMessage(text=mask_crawler.reply(content,'text')))
