@@ -8,7 +8,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, 
+    MessageEvent, JoinEvent,
+    TextMessage, TextSendMessage, 
     LocationMessage, LocationSendMessage,
     TemplateSendMessage, CarouselTemplate, CarouselColumn,
     PostbackAction, MessageAction, URIAction
@@ -35,6 +36,15 @@ def callback():
         abort(400)
 
     return 'OK'
+
+@handler.add(JoinEvent)
+def handle_join(event):
+    newcoming_text = '(fire)嗨 歡迎 ~ ψ(｀∇´)ψ (fire)\n↘查詢口罩販賣資訊請輸入 ↙\n\
+                    地址 台中市西屯區台灣大道三段99號\n(e.g.台中市政府)\n\n\
+                    (lightbulb)左下角「＋」直接傳送「位置資訊」也行喔!\n\n\
+                    (lightbulb)若不想接收提醒，可以點選本畫面右上方的選單圖示，然後關閉「提醒」的設定喔(ok)'
+    line_bot_api.reply_message(event.reply_token, TextMessage(text=newcoming_text))
+    # print("JoinEvent =", JoinEvent)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
