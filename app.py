@@ -62,7 +62,7 @@ def handle_message(event):
 
         line_bot_api.reply_message(event.reply_token, send_message)
     elif event.message.text[:2] == '查詢':
-        content = '查詢附近藥局口罩數量 ~\n\n輸入(以台中市政府為例) :\n地址 台中市西屯區台灣大道三段99號\n\nP.S.左下角「＋」直接傳送「位置資訊」也行喔!'
+        content = '查詢附近藥局口罩數量 ~\n\n輸入 :\n地址 台中市西屯區台灣大道三段99號\n\nP.S.左下角「＋」直接傳送「位置資訊」也行喔!'
         line_bot_api.reply_message( event.reply_token, TextSendMessage(text=content))
 
 
