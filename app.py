@@ -36,26 +36,27 @@ def callback():
 
     return 'OK'
 
-# @handler.add(MessageEvent, message=TextMessage)
-# def handle_message(event):
-#     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
-#     #content = "{}: {}".format(event.source.user_id, event.message.text)
-#     content = "{}".format(event.message.text)
-
-#     if content[3:] == "口罩":
-#         line_bot_api.reply_message(event.reply_token,
-#             TextSendMessage(text=mask_crawler.reply(content,'text')))
-#     elif content[3:] != "口罩":
-#         line_bot_api.reply_message(event.reply_token,
-#             TextSendMessage(text='輸入格式錯誤'))
-#     else:
-#         line_bot_api.reply_message(event.reply_token,
-#             TextSendMessage(text=content))
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
+    #content = "{}: {}".format(event.source.user_id, event.message.text)
+    content = "{}".format(event.message.text)
+    line_bot_api.reply_message(event.reply_token,
+             TextSendMessage(text=mask_crawler.reply(content,'text')))
+    # if content[3:] == "口罩":
+    #     line_bot_api.reply_message(event.reply_token,
+    #         TextSendMessage(text=mask_crawler.reply(content,'text')))
+    # elif content[3:] != "口罩":
+    #     line_bot_api.reply_message(event.reply_token,
+    #         TextSendMessage(text='輸入格式錯誤'))
+    # else:
+    #     line_bot_api.reply_message(event.reply_token,
+    #         TextSendMessage(text=content))
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
     # reply_content = mask_crawler.reply(event.message.address[5:],'text')
-    reply_content = mask_crawler.reply(event.message.address[5:],'text')
+    reply_content = mask_crawler.reply(event.message.address,'text')
     # info = reply_content.values()
     send_message = []
     for addr, info in reply_content.items():
