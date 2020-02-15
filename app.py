@@ -39,36 +39,34 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
-    #content = "{}: {}".format(event.source.user_id, event.message.text)
-    content = "{}".format(event.message.text)
-    reply_content = mask_crawler.reply(content,'text')
-    send_message = []
-    for addr, info in reply_content.items():
-        send_message.append(LocationSendMessage(
-            title=info[0], 
-            # 地址 電話 成人數量 兒童數量 距離
-            address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
-                    .format(addr, info[1], info[2], info[3], info[4]),
-            latitude=info[5], 
-            longitude=info[6]
-        ))
+    if event.message.text[:2] == '地址':
+        content = "{}".format(event.message.text[3:])
+        reply_content = mask_crawler.reply(content,'text')
+        send_message = []
+        for addr, info in reply_content.items():
+            send_message.append(LocationSendMessage(
+                title=info[0], 
+                # 地址 電話 成人數量 兒童數量 距離
+                address="{}\n{}\n成人剩餘  {}個\n兒童剩餘  {}個\n與您距離  {} km"
+                        .format(addr, info[1], info[2], info[3], info[4]),
+                latitude=info[5], 
+                longitude=info[6]
+            ))
 
-    line_bot_api.reply_message(event.reply_token, send_message)
-    # if content[3:] == "口罩":
-    #     line_bot_api.reply_message(event.reply_token,
-    #         TextSendMessage(text=mask_crawler.reply(content,'text')))
-    # elif content[3:] != "口罩":
-    #     line_bot_api.reply_message(event.reply_token,
-    #         TextSendMessage(text='輸入格式錯誤'))
-    # else:
-    #     line_bot_api.reply_message(event.reply_token,
-    #         TextSendMessage(text=content))
+        line_bot_api.reply_message(event.reply_token, send_message)
+    else:
+        content = '查詢附近藥局口罩數量 ~\n\n輸入(以台中市政府為例) :\n 地址 台中市西屯區台灣大道三段99號\n\n或者左下角「＋」直接傳送「位置訊息」也行喔!'
+        line_bot_api.reply_message( event.reply_token, TextSendMessage(text=content))
+
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
-    # reply_content = mask_crawler.reply(event.message.address[5:],'text')
-    reply_content = mask_crawler.reply(event.message.address[5:],'text')
-    # info = reply_content.values()
+
+    if event.message.address[3:5] == '台灣':
+        reply_content = mask_crawler.reply(event.message.address[5:],'text')
+    else:
+        reply_content = mask_crawler.reply(event.message.address,'text')
+
     send_message = []
     for addr, info in reply_content.items():
         send_message.append(LocationSendMessage(
