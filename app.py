@@ -41,6 +41,7 @@ def handle_message(event):
     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
     #content = "{}: {}".format(event.source.user_id, event.message.text)
     content = "{}".format(event.message.text)
+    reply_content = mask_crawler.reply(content,'text')
     send_message = []
     for addr, info in reply_content.items():
         send_message.append(LocationSendMessage(
@@ -66,7 +67,7 @@ def handle_message(event):
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location_message(event):
     # reply_content = mask_crawler.reply(event.message.address[5:],'text')
-    reply_content = mask_crawler.reply(event.message.address,'text')
+    reply_content = mask_crawler.reply(event.message.address[5:],'text')
     # info = reply_content.values()
     send_message = []
     for addr, info in reply_content.items():
