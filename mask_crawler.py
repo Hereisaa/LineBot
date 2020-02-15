@@ -43,9 +43,9 @@ def get_data(content, msg_type):
     # content is text
     if msg_type == 'text':
         phar_info = {}
-        phar_addr = []
+        # phar_addr = []
+        phar_addr = set()
         sorted_dist = []
-        duration ={}
 
         ue_location = content
         total_info = {}
@@ -64,12 +64,13 @@ def get_data(content, msg_type):
 
                 if ue_location[:3] == location_store[:3]:
                     phar_info.update({name_store: location_store})
-                    phar_addr.append(location_store)
+                    # phar_addr.append(location_store)
+                    phar_addr.add(location_store)
                     res += '{}\n'.format(location_store)
                 #print(row[6]) #data update time
 
-            print('Calculating ...')
-            sorted_dist, duration, geomatry = phar_mapping.calculating(ue_location, phar_addr, total_info)
+            print('Calculating...')
+            sorted_dist, geomatry = phar_mapping.calculating(ue_location, phar_addr, total_info)
             print('Done ...')
         f.close()
         print('File closed ...')
@@ -98,4 +99,6 @@ def reply(content, msg_type):
 
 
 # if __name__ ==  "__main__":
-#     reply('台東縣台東市更生路62-78', 'text')
+#     msg = '406台灣台中市北屯區九龍街17號'
+#     print(msg[5:])
+#     reply(msg[5:], 'text')
