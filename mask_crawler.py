@@ -97,9 +97,9 @@ def get_data(content, msg_type):
 def reply(content, msg_type):
     link = get_dl_link()
     get_file(link)
-    return get_data(content, msg_type)
+    return get_data(content.replace('台','臺'), msg_type)
 
 
 if __name__ ==  "__main__":
-    msg = '臺中市北屯區九龍街32巷10號'
+    msg = '台中市北屯區九龍街32巷10號'
     reply(msg, 'text')

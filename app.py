@@ -47,8 +47,6 @@ def handle_join(event):
 def handle_message(event):
     #print("Handle: reply_token: " + event.reply_token + ", message: " + event.message.text)
     if event.message.text[:2] == '地址':
-        if event.message.text[3] == '台':
-            event.message.text[3] = '臺'
         content = "{}".format(event.message.text[3:])
         reply_content = mask_crawler.reply(content,'text')
         send_message = []
@@ -72,12 +70,8 @@ def handle_message(event):
 def handle_location_message(event):
 
     if event.message.address[3:5] == '台灣':
-        if event.message.text[5] == '台':
-            event.message.text[5] = '臺'
         reply_content = mask_crawler.reply(event.message.address[5:],'text')
     else:
-        if event.message.text[5] == '台':
-            event.message.text[5] = '臺'
         reply_content = mask_crawler.reply(event.message.address,'text')
 
     send_message = []
