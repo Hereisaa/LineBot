@@ -70,6 +70,8 @@ def get_data(content, msg_type):
                 #print(row[6]) #data update time
 
             print('Calculating...')
+            print(ue_location)
+            print(phar_addr)
             sorted_dist, geomatry = phar_mapping.calculating(ue_location, phar_addr, total_info)
             print('Done ...')
         f.close()
@@ -98,7 +100,6 @@ def reply(content, msg_type):
     return get_data(content, msg_type)
 
 
-# if __name__ ==  "__main__":
-#     msg = '406台灣台中市北屯區九龍街32巷10號'
-#     print(msg[5:])
-#     reply(msg[5:], 'text')
+if __name__ ==  "__main__":
+    msg = '臺中市北屯區九龍街32巷10號'
+    reply(msg, 'text')
