@@ -7,8 +7,8 @@ import threading
 input:  {ue_location} user location  # 使用者定位
         {phar_addr} pharmacy info # 藥局地址
 '''
-apiKey = 'AIzaSyCnfl_3Kn51wVMmu8JfiKCs91YlI70HQig'
-# apiKey = 'AIzaSyAC78_aUpjNRPXZUYsPChWD2PUwims5GTs'
+apiKey = ''
+# apiKey = ''
 
 gmaps = googlemaps.Client(key = apiKey)
 
